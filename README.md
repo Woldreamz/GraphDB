@@ -28,7 +28,6 @@ This project is a full-stack application for managing Blazegraph databases using
 2. **Set up the backend:**
 
    ```bash
-
    cd backend
    pip install -r requirements.txt
    python manage.py migrate
