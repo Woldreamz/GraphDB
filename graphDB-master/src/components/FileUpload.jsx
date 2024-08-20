@@ -73,7 +73,7 @@ const FileUpload = () => {
       formData.append("graph_id", "none");
 
       try {
-        await HTTP.post("/create_database/", formData, {
+        await HTTP.post("/upload/", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
             "X-Requested-With": "XMLHttpRequest",
