@@ -41,7 +41,7 @@ const DBModal = ({ handleClose }) => {
     };
 
     try {
-      await HTTP.post("/create_namespace/", data, {
+      await HTTP.post("/namespace/", data, {
         headers: {
           "Content-Type": "application/json",
           "X-Requested-With": "XMLHttpRequest",
