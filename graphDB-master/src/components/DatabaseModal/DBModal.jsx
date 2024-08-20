@@ -1,22 +1,22 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
-import { HTTP } from "../utils"; // Adjust the path if necessary
-import "../assets/css/modal.css";
+import { HTTP } from "../../utils";
+import "../../assets/css/modal.css";
 
 const DBModal = ({ handleClose }) => {
   const [databaseType, setDatabaseType] = useState("Blazegraph");
-  const [namespace, setNamespace] = useState(""); // Initialize the state for namespace
+  const [namespace, setNamespace] = useState(""); // New state variable for namespace
   const [port, setPort] = useState("9999");
   const [minMemory, setMinMemory] = useState("");
   const [maxMemory, setMaxMemory] = useState("");
-  const [installationPath, setInstallationPath] = useState("");
+  const [installationPath, setInstallationPath] = useState(""); // State for installation path
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (!databaseType || !installationPath || !namespace) {
+    if (!databaseType || !installationPath) {
       toast.error(
-        "Please select the database type, provide the installation path, and specify the namespace."
+        "Please select the database type and provide the installation path."
       );
       return;
     }
@@ -37,7 +37,7 @@ const DBModal = ({ handleClose }) => {
       port,
       minMemory,
       maxMemory,
-      installationPath,
+      installationPath, // Include installation path in data
     };
 
     try {
@@ -49,7 +49,7 @@ const DBModal = ({ handleClose }) => {
         },
       });
       toast.success("Database created successfully.");
-      handleClose(); // Close the modal after successful submission
+      handleClose();
     } catch (error) {
       console.error("There was an error creating the database!", error);
       toast.error("Failed to create the database. Please try again.");
@@ -63,6 +63,7 @@ const DBModal = ({ handleClose }) => {
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
+      // Extract the folder path (may vary by browser)
       setInstallationPath(file.webkitRelativePath || file.path || file.name);
     }
   };
@@ -92,23 +93,6 @@ const DBModal = ({ handleClose }) => {
               <option value="">Select Database Type</option>
               <option value="Blazegraph">Blazegraph</option>
             </select>
-          </div>
-        </div>
-
-        {/* Namespace */}
-        <div className="mb-3 row align-items-center">
-          <label htmlFor="namespace" className="col-sm-3 col-form-label">
-            Namespace
-          </label>
-          <div className="col-sm-9">
-            <input
-              type="text"
-              id="namespace"
-              className="form-control"
-              value={namespace}
-              onChange={(e) => setNamespace(e.target.value)}
-              placeholder="Enter namespace"
-            />
           </div>
         </div>
 
