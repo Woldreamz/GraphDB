@@ -1,5 +1,5 @@
 const config = {
-  baseURL: "https://13.53.133.134/rdf",
+  baseURL: "https://wavewassh.com/rdf/",
 };
 
 export default config;
