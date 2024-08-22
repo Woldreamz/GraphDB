@@ -41,7 +41,7 @@ const DBModal = ({ handleClose }) => {
     };
 
     try {
-      await HTTP.post("/create_database/", data, {
+      await HTTP.post("create_database/", data, {
         headers: {
           "Content-Type": "application/json",
           "X-Requested-With": "XMLHttpRequest",
