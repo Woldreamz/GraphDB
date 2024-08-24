@@ -68,7 +68,14 @@ const FileUpload = () => {
       const fileSize = file.size; // File size in bytes
 
       const formData = new FormData();
-      formData.append("file", file);
+
+      // Check if the file is of type .ttl and set the ttl_file key if needed
+      if (fileExtension === "ttl") {
+        formData.append("ttl_file", file);
+      } else {
+        formData.append("file", file);
+      }
+
       formData.append("size", fileSize);
       formData.append("graph_id", "none");
 
