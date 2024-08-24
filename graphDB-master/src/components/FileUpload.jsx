@@ -20,7 +20,7 @@ const FileUpload = () => {
   // Fetch files from the server
   const fetchFiles = async () => {
     try {
-      const response = await HTTP.get("/files", {
+      const response = await HTTP.get("get_files/", {
         headers: {
           "Content-Type": "application/json",
           "X-Requested-With": "XMLHttpRequest",

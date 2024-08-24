@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react"; // Import useMemo
 import { useLocation, useNavigate } from "react-router-dom";
 import { FiBook, FiDownload, FiSettings } from "react-icons/fi";
 import { BiBulb } from "react-icons/bi";
@@ -12,29 +12,36 @@ const Sidebar = () => {
   const [activeItem, setActiveItem] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
-  const menuItems = [
-    { name: "설정", path: "/", icon: <FiSettings className="me-2" /> },
-    {
-      name: "데이터 업로드",
-      path: "/upload",
-      icon: <FiDownload className="me-2" />,
-    },
-    { name: "Namespace", path: "#", icon: <FiBook className="me-2" /> },
-    { name: "SPARQL", path: "#", icon: <BiBulb className="me-2" /> },
-    { name: "통계", path: "#", icon: <FaChartBar className="me-2" /> },
-    { name: "그래프 탐색", path: "#", icon: <IoMdShare className="me-2" /> },
-    {
-      name: "나의 프로세스",
-      path: "#",
-      icon: <IoCubeOutline className="me-2" />,
-    },
-  ];
+
+  // Use useMemo to memoize menuItems so it doesn't change across renders
+  const menuItems = useMemo(
+    () => [
+      { name: "설정", path: "/", icon: <FiSettings className="me-2" /> },
+      {
+        name: "데이터 업로드",
+        path: "/upload",
+        icon: <FiDownload className="me-2" />,
+      },
+      { name: "Namespace", path: "#", icon: <FiBook className="me-2" /> },
+      { name: "SPARQL", path: "#", icon: <BiBulb className="me-2" /> },
+      { name: "통계", path: "#", icon: <FaChartBar className="me-2" /> },
+      { name: "그래프 탐색", path: "#", icon: <IoMdShare className="me-2" /> },
+      {
+        name: "나의 프로세스",
+        path: "#",
+        icon: <IoCubeOutline className="me-2" />,
+      },
+    ],
+    []
+  ); // Empty dependency array to memoize menuItems
+
   useEffect(() => {
     const currentItem = menuItems.find(
       (item) => item.path === location.pathname
     );
     setActiveItem(currentItem?.name || "");
-  }, [location.pathname]);
+  }, [location.pathname, menuItems]); // Add menuItems to the dependency array
+
   const handleNavigation = (path, name) => {
     setActiveItem(name);
     navigate(path);
@@ -42,7 +49,7 @@ const Sidebar = () => {
 
   return (
     <div
-      className="d-flex flex-column  p-3 bg-dark app__main-nav"
+      className="d-flex flex-column p-3 bg-dark app__main-nav"
       style={{ width: "250px", height: "150vh" }}
     >
       <p className="mb-5 mt-3">

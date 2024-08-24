@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { HTTP } from "../../utils";
+import PropTypes from "prop-types";
 import "../../assets/css/modal.css";
 
 const DBModal = ({ handleClose }) => {
@@ -21,8 +22,13 @@ const DBModal = ({ handleClose }) => {
       return;
     }
 
+    if (!namespace) {
+      toast.error("Please provide a namespace.");
+      return;
+    }
+
     const data = {
-      namespace,
+      namespace, // Include namespace in the data object
       properties: {
         "com.bigdata.rdf.store.DataLoader":
           "com.bigdata.rdf.data.RDFDataLoader",
@@ -63,7 +69,6 @@ const DBModal = ({ handleClose }) => {
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
-      // Extract the folder path (may vary by browser)
       setInstallationPath(file.webkitRelativePath || file.path || file.name);
     }
   };
@@ -76,6 +81,23 @@ const DBModal = ({ handleClose }) => {
           설치 경로와 Port를 입력해주세요. 추가적으로 최소/최대 메모리 사용량을
           입력하면, 이에 맞게 데이터베이스가 실행됩니다.
         </p>
+
+        {/* Namespace Input */}
+        <div className="mb-3 row align-items-center">
+          <label htmlFor="namespace" className="col-sm-3 col-form-label">
+            Namespace
+          </label>
+          <div className="col-sm-9">
+            <input
+              type="text"
+              id="namespace"
+              className="form-control"
+              value={namespace}
+              onChange={(e) => setNamespace(e.target.value)}
+              placeholder="Enter namespace"
+            />
+          </div>
+        </div>
 
         {/* Database Type Selection */}
         <h6>Required</h6>
@@ -189,6 +211,10 @@ const DBModal = ({ handleClose }) => {
       </form>
     </React.Fragment>
   );
+};
+
+DBModal.propTypes = {
+  handleClose: PropTypes.func.isRequired,
 };
 
 export default DBModal;
