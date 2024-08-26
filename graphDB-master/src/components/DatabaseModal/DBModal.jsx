@@ -6,7 +6,7 @@ import "../../assets/css/modal.css";
 
 const DBModal = ({ handleClose }) => {
   const [databaseType, setDatabaseType] = useState("Blazegraph");
-  const [namespace, setNamespace] = useState(""); // New state variable for namespace
+  const [name_space, setNamespace] = useState(""); // New state variable for name_space
   const [port, setPort] = useState("9999");
   const [minMemory, setMinMemory] = useState("");
   const [maxMemory, setMaxMemory] = useState("");
@@ -22,13 +22,13 @@ const DBModal = ({ handleClose }) => {
       return;
     }
 
-    if (!namespace) {
-      toast.error("Please provide a namespace.");
+    if (!name_space) {
+      toast.error("Please provide a name_space.");
       return;
     }
 
     const data = {
-      namespace, // Include namespace in the data object
+      name_space, // Include name_space in the data object
       properties: {
         "com.bigdata.rdf.store.DataLoader":
           "com.bigdata.rdf.data.RDFDataLoader",
@@ -39,7 +39,7 @@ const DBModal = ({ handleClose }) => {
         "com.bigdata.rdf.sail.axioms": "true",
         "com.bigdata.rdf.sail.includeInferred": "true",
         "com.bigdata.rdf.sail.incremental": "false",
-        "com.bigdata.rdf.sail.namespace": namespace, // Include namespace in properties if needed
+        "com.bigdata.rdf.sail.name_space": name_space, // Include name_space in properties if needed
         "com.bigdata.journal.AbstractJournal.minMemory": "512m", // Include minMemory in properties
         "com.bigdata.journal.AbstractJournal.maxMemory": "4g", // Include maxMemory in properties
       },
@@ -87,17 +87,17 @@ const DBModal = ({ handleClose }) => {
 
         {/* Namespace Input */}
         <div className="mb-3 row align-items-center">
-          <label htmlFor="namespace" className="col-sm-3 col-form-label">
+          <label htmlFor="name_space" className="col-sm-3 col-form-label">
             Namespace
           </label>
           <div className="col-sm-9">
             <input
               type="text"
-              id="namespace"
+              id="name_space"
               className="form-control"
-              value={namespace}
+              value={name_space}
               onChange={(e) => setNamespace(e.target.value)}
-              placeholder="Enter namespace"
+              placeholder="Enter name_space"
             />
           </div>
         </div>
