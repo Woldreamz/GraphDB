@@ -39,6 +39,9 @@ const DBModal = ({ handleClose }) => {
         "com.bigdata.rdf.sail.axioms": "true",
         "com.bigdata.rdf.sail.includeInferred": "true",
         "com.bigdata.rdf.sail.incremental": "false",
+        "com.bigdata.rdf.sail.namespace": namespace, // Include namespace in properties if needed
+        "com.bigdata.journal.AbstractJournal.minMemory": "512m", // Include minMemory in properties
+        "com.bigdata.journal.AbstractJournal.maxMemory": "4g", // Include maxMemory in properties
       },
       port,
       minMemory,
@@ -47,7 +50,7 @@ const DBModal = ({ handleClose }) => {
     };
 
     try {
-      await HTTP.post("create_database/", data, {
+      await HTTP.post("db_create/", data, {
         headers: {
           "Content-Type": "application/json",
           "X-Requested-With": "XMLHttpRequest",
