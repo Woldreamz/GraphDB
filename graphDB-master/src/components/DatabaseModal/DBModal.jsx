@@ -6,7 +6,7 @@ import "../../assets/css/modal.css";
 
 const DBModal = ({ handleClose }) => {
   const [databaseType, setDatabaseType] = useState("Blazegraph");
-  const [name_space, setNamespace] = useState(""); // New state variable for name_space
+  const [name_space, setNamespace] = useState(""); // State variable for name_space
   const [port, setPort] = useState("9999");
   const [minMemory, setMinMemory] = useState("");
   const [maxMemory, setMaxMemory] = useState("");
@@ -40,8 +40,8 @@ const DBModal = ({ handleClose }) => {
         "com.bigdata.rdf.sail.includeInferred": "true",
         "com.bigdata.rdf.sail.incremental": "false",
         "com.bigdata.rdf.sail.name_space": name_space, // Include name_space in properties if needed
-        "com.bigdata.journal.AbstractJournal.minMemory": "512m", // Include minMemory in properties
-        "com.bigdata.journal.AbstractJournal.maxMemory": "4g", // Include maxMemory in properties
+        "com.bigdata.journal.AbstractJournal.minMemory": minMemory || "512m", // Use minMemory if provided
+        "com.bigdata.journal.AbstractJournal.maxMemory": maxMemory || "4g", // Use maxMemory if provided
       },
       port,
       minMemory,
@@ -62,17 +62,6 @@ const DBModal = ({ handleClose }) => {
     } catch (error) {
       console.error("There was an error creating the database!", error);
       toast.error("Failed to create the database. Please try again.");
-    }
-  };
-
-  const handleFolderChoose = () => {
-    document.getElementById("fileInput").click();
-  };
-
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      setInstallationPath(file.webkitRelativePath || file.path || file.name);
     }
   };
 
@@ -127,35 +116,16 @@ const DBModal = ({ handleClose }) => {
             Installation Path
           </label>
           <div className="col-sm-9">
-            <div className="input-group">
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={handleFolderChoose}
-              >
-                Choose folder
-              </button>
-              <input
-                type="text"
-                id="installationPath"
-                className="form-control"
-                value={installationPath}
-                onChange={(e) => setInstallationPath(e.target.value)}
-                placeholder="Enter or select installation path"
-                readOnly
-              />
-            </div>
+            <input
+              type="text"
+              id="installationPath"
+              className="form-control"
+              value={installationPath}
+              onChange={(e) => setInstallationPath(e.target.value)}
+              placeholder="Enter installation path"
+            />
           </div>
         </div>
-
-        {/* Hidden File Input for Folder Selection */}
-        <input
-          type="file"
-          id="fileInput"
-          style={{ display: "none" }}
-          webkitdirectory=""
-          onChange={handleFileChange}
-        />
 
         {/* Port */}
         <div className="mb-3 row align-items-center">
